@@ -1085,3 +1085,54 @@ Development URL: [https://sapi.avay.vn]([https://sapi.avay.vn])
         "file": "iphone_7_plus_ios_10_location_a90af961d5f04adecd2e8cc4d6ec848d"
     }
   ```javascript
+  ### Create new device data: `[POST] /device_data/upload_url` or anonymously `[POST] /device_data/anonymous/upload_url`
+
+* Request (application/json)
+  - Method: `POST`
+  - Route: `/device_data/upload_url` or `[POST] /device_data/anonymous/upload_url`
+  - URL: `https://sapi.avay.vn/device_data/upload_url`
+  - Headers: (don't need authorization token for anonymous data)
+  ```javascript
+    Content-Type: "application/json"
+    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJwaG9uZV9udW1iZXIiOiIwOTg3MDAwMDAxIiwiaWF0IjoxNDgxNjM0NDA5LCJleHAiOjE0ODIyMzkyMDl9.H0FYRLmeBR6K9_fZ_IogqbEA4gBjxwN4rjrgnkOlYKs    
+  ```
+  - Body: (require sign for anonymous data)
+  ```javascript
+    {
+        "filename": "12345678901234",
+        "url": "001002003004005",
+        "upload_id": "a223kaj2jalci2",
+        "device_id": "59b604f4d445842deefd999cdfa59e3b",
+        "device_code": "iphone_7_plus",
+        "device_os": "ios_10",
+        "data_type": "location",
+    }
+  ```
+  - Sign build: "[data\_type]\_[device\_id]\_[device\_os]\_[timestamp]", method: hash sha256 with secret key
+* Response 200 (application/json)
+  - Body
+  ```javascript
+    {
+        "filename": "test.csv.gz",
+        "url": "001002003004005",
+        "upload_id": "a223kaj2jalci2",
+        "expire_date": ""
+    }
+  ```javascript
+  * Request (application/json)
+  - Method: `GET`
+  - Route: `/device_data/retry/:upload_id`
+  - URL: `https://sapi.avay.vn/device_data/retry/:upload_id`
+  ```
+    Content-Type: "application/json"
+  ```
+* Response 200 (application/json)
+  - Body
+  ```javascript
+    {
+        "filename": "test.csv.gz",
+        "url": "001002003004005",
+        "upload_id": "a223kaj2jalci2",
+        "expire_date": ""
+    }
+  ```javascript
